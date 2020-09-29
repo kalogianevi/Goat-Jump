@@ -461,7 +461,8 @@ MonoBehaviour:
   ExtraBouncePlatPrefab: {fileID: 3216592107945184629, guid: dd28285244e510741b7b63c3c74dc0b5,
     type: 3}
   Player: {fileID: 479169816326820133}
-  height: 0
+  Width: 0
+  Height: 0
 --- !u!1 &822209733
 GameObject:
   m_ObjectHideFlags: 0
@@ -1069,7 +1070,12 @@ PrefabInstance:
     - target: {fileID: 2014887211343267116, guid: 2753bfdb5bd1344ada76e2a1f3ce1f8b,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -12
+      value: -27.54
+      objectReference: {fileID: 0}
+    - target: {fileID: 2014887211343267116, guid: 2753bfdb5bd1344ada76e2a1f3ce1f8b,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 88.2
       objectReference: {fileID: 0}
     - target: {fileID: 2014887211343267283, guid: 2753bfdb5bd1344ada76e2a1f3ce1f8b,
         type: 3}
@@ -1109,6 +1115,11 @@ PrefabInstance:
     - target: {fileID: 2014887211343267283, guid: 2753bfdb5bd1344ada76e2a1f3ce1f8b,
         type: 3}
       propertyPath: m_projectionMatrixMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2014887211343267283, guid: 2753bfdb5bd1344ada76e2a1f3ce1f8b,
+        type: 3}
+      propertyPath: m_AllowDynamicResolution
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2112200691670690953, guid: 2753bfdb5bd1344ada76e2a1f3ce1f8b,

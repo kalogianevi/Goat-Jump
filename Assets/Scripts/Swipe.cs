@@ -33,35 +33,33 @@ namespace Assets.Scripts
                     if (direction == "Vertical")
                     {
                         //swipe upwards
-                        if (currentSwipe.y > 0 &&  currentSwipe.x > -0.1f && currentSwipe.x < 0.1f)
+                        if (currentSwipe.y > 0 &&  currentSwipe.x > -0.5f && currentSwipe.x < 0.5f)
                         {
                             Debug.Log("up swipe");
-                            return 1;
+                            return 0.5f;
                         }
                         //swipe down
-                        if (currentSwipe.y < 0  && currentSwipe.x > -0.1f && currentSwipe.x < 0.1f)
+                        if (currentSwipe.y < 0  && currentSwipe.x > -0.5f && currentSwipe.x < 0.5f)
                         {
                             Debug.Log("down swipe");
-                            return -1;
+                            return -0.5f;
                         }
                     }
 
                     if(direction == "Horizontal")
                     {
                         //swipe left
-                        if (currentSwipe.x < 0)// && currentSwipe.y > -0.5f && currentSwipe.y < 0.5f)
+                        if (currentSwipe.x < 0 && currentSwipe.y > -0.5f && currentSwipe.y < 0.5f)
                         {
                             Debug.Log("left swipe : " +currentSwipe.x);
-                            currentSwipe.x = Mathf.Clamp(currentSwipe.x,  -1f, -0.5f);
-                            return -1;
+                            return -0.5f;
                         }
 
                         //swipe right
-                        if (currentSwipe.x > 0 )//&& currentSwipe.y > -0.1f && currentSwipe.y < 0.1f)
+                        if (currentSwipe.x > 0 && currentSwipe.y > -0.5f && currentSwipe.y < 0.5f)
                         {
                             Debug.Log("right swipe : "  +currentSwipe.x);
-                            currentSwipe.x = Mathf.Clamp(currentSwipe.x, 0.5f, 1.0f);
-                            return 1;
+                            return 0.5f;
                         }
                     }
                 }

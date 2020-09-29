@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 namespace Assets.Scripts
 {
@@ -8,12 +9,14 @@ namespace Assets.Scripts
         public MobileInputManager MMobileInputManager;
         public const float FALLINGTIMEBEFOREDEAD = 0.5f;
         public const float PLAYERSPEED = 10.0f;
-
+        public const float MOVEDURATION = 0.025f;
         private Rigidbody2D rd2d;
         private float moveInput;
         private float speed;
         private float targetTime;
-
+        
+        private Vector2 startVelocity;
+        private Vector2 endVelocity;
         void Start()
         {
             MMobileInputManager = new MobileInputManager();
@@ -21,36 +24,32 @@ namespace Assets.Scripts
 
             targetTime = FALLINGTIMEBEFOREDEAD;
             speed = PLAYERSPEED;
-            Time.timeScale = 1; 
+            Time.timeScale = 1;
             rd2d.gravityScale = 0.0f;
         }
 
         // Update is called once per frame
         void FixedUpdate()
         {
-            if (MGameManager.GetIsGameRunning())
+            if (MGameManager.GetIsGameRunning() && !MGameManager.GetIsWaitingToStart())
             {
                 rd2d.gravityScale = 5.0f;
-            
+
                 if (SystemInfo.deviceType == DeviceType.Handheld)
                 {
                     moveInput = MMobileInputManager.Swipe("Horizontal");
 
-                    if (moveInput < 0 && transform.position.x > -1.5f)
+                    if (moveInput < 0 || moveInput > 0 )
                     {
-                        rd2d.transform.position = new Vector2(transform.position.x - 1.75f, transform.position.y);
+                        StartCoroutine(MobileMove(moveInput));
                     }
-
-                    if ((moveInput > 0 && transform.position.x < 1.5f))
-                    {
-                        rd2d.transform.position = new Vector2(transform.position.x - 1.75f, transform.position.y);
-                    }
+        
                 }
                 else
                 {
                     moveInput = Input.GetAxis("Horizontal");
-                    rd2d.velocity = new Vector2(moveInput * speed, rd2d.velocity.y);   
-               
+                    rd2d.velocity = new Vector2(moveInput * speed, rd2d.velocity.y);
+
                 }
 
                 TurnPlayer(moveInput);
@@ -58,33 +57,33 @@ namespace Assets.Scripts
                 if (moveInput != 0)
                 {
                     Debug.Log(" moveInput : " + moveInput);
-                    Debug.Log(" velocity : "+ rd2d.velocity);       
+                    Debug.Log(" velocity : " + rd2d.velocity);
                 }
 
                 if (IsFallingToDeath())
                 {
                     MGameManager.RestartGame();
                 }
-          
-                if(!IsFalling())
+
+                if (!IsFalling())
                 {
                     targetTime = FALLINGTIMEBEFOREDEAD;
                 }
 
             }
             else
-            { 
+            {
                 rd2d.gravityScale = 0.0f;
-                rd2d.velocity = new Vector2(0.0f, 0.0f);   
-            
+                rd2d.velocity = new Vector2(0.0f, 0.0f);
+
                 if (MGameManager.GetIsWaitingToStart())
                 {
-                    if (Input.touchCount > 0 || Input.GetMouseButton(0))     
+                    if (Input.touchCount > 0 || Input.GetMouseButton(0))
                     {
                         MGameManager.StartGame();
                     }
                 }
-           
+
             }
         }
 
@@ -95,6 +94,7 @@ namespace Assets.Scripts
             {
                 return true;
             }
+
             return false;
         }
 
@@ -122,6 +122,21 @@ namespace Assets.Scripts
             {
                 this.GetComponent<SpriteRenderer>().flipX = true;
             }
+        }
+
+        IEnumerator MobileMove(float moveInput)
+        {
+            float moveTime = 0;
+            startVelocity = rd2d.velocity;
+            endVelocity = new Vector2(moveInput * speed, rd2d.velocity.y);
+
+            while (moveTime < MOVEDURATION)
+            {
+                moveTime += Time.deltaTime;
+                rd2d.velocity = Vector3.Lerp(startVelocity, endVelocity, moveTime /  MOVEDURATION);
+                yield return null;
+            }
+ 
         }
     }
 }
