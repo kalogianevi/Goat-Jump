@@ -20,7 +20,7 @@ public class Moving : MonoBehaviour
     
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        //If you are the player and you are dropping onto the platform
+        //If you are the Player and you are dropping onto the platform
         if (collision.gameObject.CompareTag("Player") && collision.gameObject.GetComponent<Rigidbody2D>().velocity.y <= 0)
         {
                 collision.gameObject.GetComponent<Rigidbody2D>().AddForce(Vector3.up * SpringBounceForce);
