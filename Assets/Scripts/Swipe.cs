@@ -21,14 +21,11 @@ namespace Assets.Scripts
                 }
                 if(t.phase == TouchPhase.Ended)
                 {
-                    //save ended touch 2d point
                     secondPressPos = new Vector2(t.position.x,t.position.y);
-                           
-                    //create vector from the two points
+
                     currentSwipe = new Vector3(secondPressPos.x - firstPressPos.x, secondPressPos.y - firstPressPos.y);
                     Debug.Log("Ended");
-                
-                    //normalize the 2d vector
+
                     currentSwipe.Normalize();
                     if (direction == "Vertical")
                     {

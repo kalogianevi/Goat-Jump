@@ -6,7 +6,6 @@ namespace Assets.Scripts
     {
         public float BounceForce = 600.0f;
 
-        // Update is called once per frame
         private void OnCollisionEnter2D(Collision2D collision)
         {
             //If you are the Player and you are dropping onto the platform
